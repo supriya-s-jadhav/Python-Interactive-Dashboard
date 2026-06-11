@@ -17,6 +17,11 @@ if maindatafile and subdatafile:
     df1 = pd.read_excel(maindatafile)
     df2 = pd.read_excel(subdatafile)
 
+    # indexing from 1
+    # indexing from 1
+    df1.index = df1.index + 1
+    df2.index = df2.index + 1
+
     st.markdown("### 2. Configure Columns")
     st.write("Ensure your part numbers and attributes align correctly.")
 
@@ -81,7 +86,16 @@ if maindatafile and subdatafile:
         )
 
         with tab1:
-            st.dataframe(missing_in_subdatafile)
+            col1, col2, col3 = st.columns(3)
+            with col1:
+                st.header("Main Data File")
+                st.dataframe(df1, height=300)
+            with col2:
+                st.header("Sub Data File")
+                st.dataframe(df2, height=300)
+            with col3:
+                st.header("Missing in Sub Data File")
+                st.dataframe(missing_in_subdatafile)
         with tab2:
             st.dataframe(missing_in_maindatafile)
         with tab3:
